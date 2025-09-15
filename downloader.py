@@ -1,12 +1,12 @@
-import import
+import io
 import sys
 import urllib.request as request
 
 BUFFER_SIZE = 1024
 
-def download_lenght(response, out_file, length):
-    times = lengh // BUFFER_SIZE
-    if lengh % BUFFER_SIZE > 0:
+def download_length(response, output, length):
+    times = length // BUFFER_SIZE
+    if length % BUFFER_SIZE > 0:
         times += 1
     for time in range(times):
         output.write(response.read(BUFFER_SIZE))
@@ -21,21 +21,21 @@ def download(response, output):
             break
         output.write(data)
         print("Downloaded {bytes}".format(bytes=total_downloaded))
-        
+
 def main():
     response = request.urlopen(sys.argv[1])
-    output = io.FileIO("saida.zip", "w")
+    out_file = io.FileIO("saida.zip", "w")
 
     content_length = response.getheader("Content-Length")
     if content_length:
         length = int(content_length)
-        download_lenght(response, out_file, lengh)
+        download_length(response, out_file, length)
     else:
-        download(response, output)
+        download(response, out_file)
 
     response.close()
     out_file.close()
     print("Download concluído!")
 
-if __main__ == "__main__":
+if __name__ == "__main__":
     main()
