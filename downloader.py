@@ -10,7 +10,7 @@ def download_length(response, output, length):
         times += 1
     for time in range(times):
         output.write(response.read(BUFFER_SIZE))
-        print("Downloaded %d" %(((time *BUFFER_SIZE) / length) * 100))
+        print("\rDownloaded %d%%" %(((time *BUFFER_SIZE) / length) * 100), end="", flush=True)
     
 def download(response, output):
     total_downloaded =0
@@ -20,7 +20,7 @@ def download(response, output):
         if not data:
             break
         output.write(data)
-        print("Downloaded {bytes}".format(bytes=total_downloaded))
+        print("\rDownloaded {bytes}".format(bytes=total_downloaded), end="", flush=True)
 
 def main():
     response = request.urlopen(sys.argv[1])
